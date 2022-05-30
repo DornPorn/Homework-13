@@ -5,4 +5,10 @@
 //  Created by Stanislav Rassolenko on 5/30/22.
 //
 
-import Foundation
+import UIKit
+
+struct CellModel {
+    let icon: String?
+    let title: String?
+    let color: UIColor?
+}
