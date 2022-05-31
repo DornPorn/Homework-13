@@ -18,12 +18,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        settingsTableView.delegate = self
-        settingsTableView.dataSource = self
-        settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "settingsCell")
-        settingsTableView.register(TogglableSettingsTableViewCell.self, forCellReuseIdentifier: "togglableSettingsCell")
-        settingsTableView.register(SettingsTableViewCellWithOnOffLabel.self, forCellReuseIdentifier: "settingsCellWithOnOffLabel")
-        
+        setupTableView()
         setupHierarchy()
         setupLayout()
         setupView()
@@ -48,10 +43,16 @@ class SettingsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .white
         settingsTableView.separatorInset = .init(top: 0, left: 70, bottom: 0, right: 0)
-        
     }
     
-
+    private func setupTableView() {
+        settingsTableView.delegate = self
+        settingsTableView.dataSource = self
+        settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "settingsCell")
+        settingsTableView.register(TogglableSettingsTableViewCell.self, forCellReuseIdentifier: "togglableSettingsCell")
+        settingsTableView.register(SettingsTableViewCellWithOnOffLabel.self, forCellReuseIdentifier: "settingsCellWithOnOffLabel")
+        settingsTableView.register(SettingsTableViewCellWithNotification.self, forCellReuseIdentifier: "settingsCellWithNotification")
+    }
 }
 
 extension SettingsViewController: UITableViewDataSource {
@@ -60,7 +61,6 @@ extension SettingsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if cellData[indexPath.section][indexPath.row].title == "Авиарежим" || cellData[indexPath.section][indexPath.row].title == "VPN" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "togglableSettingsCell", for: indexPath) as! TogglableSettingsTableViewCell
             cell.data = cellData[indexPath.section][indexPath.row]
@@ -71,14 +71,17 @@ extension SettingsViewController: UITableViewDataSource {
             cell.data = cellData[indexPath.section][indexPath.row]
             cell.selectionStyle = .none
             return cell
+        } else if cellData[indexPath.section][indexPath.row].title == "Основные" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCellWithNotification", for: indexPath) as! SettingsTableViewCellWithNotification
+            cell.data = cellData[indexPath.section][indexPath.row]
+            cell.selectionStyle = .none
+            return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as! SettingsTableViewCell
             cell.data = cellData[indexPath.section][indexPath.row]
             cell.selectionStyle = .none
             return cell
         }
-        
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,22 +91,15 @@ extension SettingsViewController: UITableViewDataSource {
 
 extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 45
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         let view = UIView()
-//        view.backgroundColor = .black.withAlphaComponent(0.05)
-
         return section == 0 ? view : nil
-        
-      
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
-
-    
 }
