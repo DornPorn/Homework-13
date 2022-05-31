@@ -9,6 +9,8 @@ import UIKit
 
 class NotificationView: UIView {
     
+    // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -20,22 +22,26 @@ class NotificationView: UIView {
         super.init(coder: coder)
     }
     
+    // MARK: - UI Elements
+    
     private lazy var notificationContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .systemRed
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 13
+        view.layer.cornerRadius = Metric.containerWidthAndHeight / 2
         view.clipsToBounds = true
         return view
     }()
     
     private lazy var notificationLabel: UILabel = {
         let label = UILabel()
-        label.text = "1"
+        label.text = Strings.labelText
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    // MARK: - Settings
     
     private func setupHierarchy() {
         self.addSubview(notificationContainer)
@@ -43,12 +49,26 @@ class NotificationView: UIView {
     }
     
     private func setupLayout() {
-        notificationContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        notificationContainer.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        notificationContainer.widthAnchor.constraint(equalToConstant: 26).isActive = true
-        notificationContainer.heightAnchor.constraint(equalToConstant: 26).isActive = true
+        notificationContainer.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        notificationContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        notificationContainer.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        notificationContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        notificationContainer.widthAnchor.constraint(equalToConstant: Metric.containerWidthAndHeight).isActive = true
+        notificationContainer.heightAnchor.constraint(equalToConstant: Metric.containerWidthAndHeight).isActive = true
         
         notificationLabel.centerXAnchor.constraint(equalTo: notificationContainer.centerXAnchor).isActive = true
         notificationLabel.centerYAnchor.constraint(equalTo: notificationContainer.centerYAnchor).isActive = true
+    }
+}
+
+// MARK: - Constants
+
+extension NotificationView {
+    enum Metric {
+        static let containerWidthAndHeight: CGFloat = 26
+    }
+    
+    enum Strings {
+        static let labelText: String = "1"
     }
 }
