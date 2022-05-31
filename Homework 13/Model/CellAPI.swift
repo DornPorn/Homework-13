@@ -13,7 +13,7 @@ class CellAPI {
                          CellModel(icon: "antenna.radiowaves.left.and.right", title: "Сотовая связь", color: .systemGreen, onOffText: nil),
                          CellModel(icon: "personalhotspot", title: "Режим модема", color: .systemGreen, onOffText: nil),
                          CellModel(icon: "network", title: "VPN", color: .systemBlue, onOffText: nil)],
-                        [CellModel(icon: "bell.fill", title: "Уведолмления", color: .systemRed, onOffText: nil),
+                        [CellModel(icon: "bell.fill", title: "Уведомления", color: .systemRed, onOffText: nil),
                          CellModel(icon: "speaker.wave.3.fill", title: "Звуки, тактильные сигналы", color: .systemRed, onOffText: nil),
                          CellModel(icon: "moon.fill", title: "Не беспокоить", color: .systemPurple, onOffText: nil),
                          CellModel(icon: "hourglass", title: "Экранное время", color: .systemPurple, onOffText: nil)],
