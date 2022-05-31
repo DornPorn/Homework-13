@@ -1,11 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "icons8-stocks-80.png",
+      "filename" : "icons8-stocks-50.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "icons8-stocks-100.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
