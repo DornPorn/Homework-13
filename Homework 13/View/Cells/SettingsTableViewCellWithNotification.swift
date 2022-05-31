@@ -1,22 +1,17 @@
 //
-//  SettingsTableViewCell.swift
+//  SettingsTableViewCellWithNotification.swift
 //  Homework 13
 //
-//  Created by Stanislav Rassolenko on 5/30/22.
+//  Created by Stanislav Rassolenko on 5/31/22.
 //
 
 import UIKit
 
-class SettingsTableViewCell: UITableViewCell {
+class SettingsTableViewCellWithNotification: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        
-        contentView.addSubview(containerView)
-        containerView.addSubview(cellIcon)
-        contentView.addSubview(cellLabel)
-        contentView.addSubview(arrowImageView)
-        
+        setupHierarchy()
         setupLayout()
     }
     
@@ -56,6 +51,13 @@ class SettingsTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    private lazy var notificationView: NotificationView = {
+        let view = NotificationView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
     var data: CellModel? {
         didSet{
             guard let cellItem = data else { return }
@@ -79,6 +81,14 @@ class SettingsTableViewCell: UITableViewCell {
         }
     }
     
+    private func setupHierarchy() {
+        contentView.addSubview(containerView)
+        containerView.addSubview(cellIcon)
+        contentView.addSubview(cellLabel)
+        contentView.addSubview(arrowImageView)
+        contentView.addSubview(notificationView)
+    }
+    
     private func setupLayout() {
         
         containerView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
@@ -98,5 +108,9 @@ class SettingsTableViewCell: UITableViewCell {
         arrowImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20).isActive = true
         arrowImageView.widthAnchor.constraint(equalToConstant: 8).isActive = true
         arrowImageView.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        
+        notificationView.centerYAnchor.constraint(equalTo: arrowImageView.centerYAnchor).isActive = true
+        notificationView.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -30).isActive = true
     }
 }
+
