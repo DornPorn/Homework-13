@@ -21,6 +21,7 @@ class SettingsViewController: UIViewController {
         settingsTableView.delegate = self
         settingsTableView.dataSource = self
         settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "settingsCell")
+        settingsTableView.register(TogglableSettingsTableViewCell.self, forCellReuseIdentifier: "togglableSettingsCell")
         
         setupHierarchy()
         setupLayout()
@@ -38,7 +39,7 @@ class SettingsViewController: UIViewController {
         settingsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         settingsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         settingsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        settingsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        settingsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     private func setupView() {
@@ -58,11 +59,20 @@ extension SettingsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as! SettingsTableViewCell
-        cell.data = cellData[indexPath.section][indexPath.row]
-        cell.selectionStyle = .none
         
-        return cell
+        if cellData[indexPath.section][indexPath.row].title == "Авиарежим" || cellData[indexPath.section][indexPath.row].title == "VPN" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "togglableSettingsCell", for: indexPath) as! TogglableSettingsTableViewCell
+            cell.data = cellData[indexPath.section][indexPath.row]
+            cell.selectionStyle = .none
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as! SettingsTableViewCell
+            cell.data = cellData[indexPath.section][indexPath.row]
+            cell.selectionStyle = .none
+            return cell
+        }
+        
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

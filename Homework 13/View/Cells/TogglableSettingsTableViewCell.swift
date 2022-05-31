@@ -1,13 +1,13 @@
 //
-//  SettingsTableViewCell.swift
+//  TogglableSettingsTableViewCell.swift
 //  Homework 13
 //
-//  Created by Stanislav Rassolenko on 5/30/22.
+//  Created by Stanislav Rassolenko on 5/31/22.
 //
 
 import UIKit
 
-class SettingsTableViewCell: UITableViewCell {
+class TogglableSettingsTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -15,7 +15,7 @@ class SettingsTableViewCell: UITableViewCell {
         contentView.addSubview(containerView)
         containerView.addSubview(cellIcon)
         contentView.addSubview(cellLabel)
-        contentView.addSubview(arrowImageView)
+        contentView.addSubview(toggleSwitch)
         
         setupLayout()
     }
@@ -48,12 +48,10 @@ class SettingsTableViewCell: UITableViewCell {
         return view
     }()
     
-    private lazy var arrowImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = .black.withAlphaComponent(0.2)
-        return imageView
+    private lazy var toggleSwitch: UISwitch = {
+        let switchItem = UISwitch()
+        switchItem.translatesAutoresizingMaskIntoConstraints = false
+        return switchItem
     }()
     
     var data: CellModel? {
@@ -63,7 +61,7 @@ class SettingsTableViewCell: UITableViewCell {
             if let img = cellItem.icon {
                 if img == "bluetooth" || img == "stocks" {
                     cellIcon.image = UIImage(named: img)
-                    cellIcon.tintColor = .white
+                    cellIcon.image?.withTintColor(.white)
                 } else {
                     cellIcon.image = UIImage(systemName: img)
                 }
@@ -95,9 +93,10 @@ class SettingsTableViewCell: UITableViewCell {
         cellLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
         cellLabel.leadingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 20).isActive = true
         
-        arrowImageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
-        arrowImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20).isActive = true
-        arrowImageView.widthAnchor.constraint(equalToConstant: 8).isActive = true
-        arrowImageView.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        toggleSwitch.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        toggleSwitch.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20).isActive = true
+//        toggleSwitch.widthAnchor.constraint(equalToConstant: 8).isActive = true
+//        toggleSwitch.heightAnchor.constraint(equalToConstant: 15).isActive = true
     }
 }
+
