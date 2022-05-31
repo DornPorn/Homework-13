@@ -22,6 +22,7 @@ class SettingsViewController: UIViewController {
         settingsTableView.dataSource = self
         settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "settingsCell")
         settingsTableView.register(TogglableSettingsTableViewCell.self, forCellReuseIdentifier: "togglableSettingsCell")
+        settingsTableView.register(SettingsTableViewCellWithOnOffLabel.self, forCellReuseIdentifier: "settingsCellWithOnOffLabel")
         
         setupHierarchy()
         setupLayout()
@@ -62,6 +63,11 @@ extension SettingsViewController: UITableViewDataSource {
         
         if cellData[indexPath.section][indexPath.row].title == "Авиарежим" || cellData[indexPath.section][indexPath.row].title == "VPN" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "togglableSettingsCell", for: indexPath) as! TogglableSettingsTableViewCell
+            cell.data = cellData[indexPath.section][indexPath.row]
+            cell.selectionStyle = .none
+            return cell
+        } else if cellData[indexPath.section][indexPath.row].title == "Wi-Fi" || cellData[indexPath.section][indexPath.row].title == "Bluetooth" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCellWithOnOffLabel", for: indexPath) as! SettingsTableViewCellWithOnOffLabel
             cell.data = cellData[indexPath.section][indexPath.row]
             cell.selectionStyle = .none
             return cell
