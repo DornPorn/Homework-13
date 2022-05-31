@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A0361EF2845D98C00879DFF /* TogglableSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0361EE2845D98C00879DFF /* TogglableSettingsTableViewCell.swift */; };
+		3A0361F12845E2BD00879DFF /* SettingsTableViewCellWithOnOffLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0361F02845E2BD00879DFF /* SettingsTableViewCellWithOnOffLabel.swift */; };
 		3A4366E72844AF6700A6A350 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4366E62844AF6700A6A350 /* AppDelegate.swift */; };
 		3A4366E92844AF6700A6A350 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4366E82844AF6700A6A350 /* SceneDelegate.swift */; };
 		3A4366F02844AF6800A6A350 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A4366EF2844AF6800A6A350 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		3A0361EE2845D98C00879DFF /* TogglableSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TogglableSettingsTableViewCell.swift; sourceTree = "<group>"; };
+		3A0361F02845E2BD00879DFF /* SettingsTableViewCellWithOnOffLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCellWithOnOffLabel.swift; sourceTree = "<group>"; };
 		3A4366E32844AF6700A6A350 /* Homework 13.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Homework 13.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A4366E62844AF6700A6A350 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A4366E82844AF6700A6A350 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			children = (
 				3A4367002844C1AE00A6A350 /* SettingsTableViewCell.swift */,
 				3A0361EE2845D98C00879DFF /* TogglableSettingsTableViewCell.swift */,
+				3A0361F02845E2BD00879DFF /* SettingsTableViewCellWithOnOffLabel.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				3A4366E92844AF6700A6A350 /* SceneDelegate.swift in Sources */,
 				3A0361EF2845D98C00879DFF /* TogglableSettingsTableViewCell.swift in Sources */,
 				3A4367012844C1AE00A6A350 /* SettingsTableViewCell.swift in Sources */,
+				3A0361F12845E2BD00879DFF /* SettingsTableViewCellWithOnOffLabel.swift in Sources */,
 				3A4366FF2844B19400A6A350 /* CellAPI.swift in Sources */,
 				3A4366FB2844B05500A6A350 /* SettingsViewController.swift in Sources */,
 				3A4366FD2844B14400A6A350 /* CellModel.swift in Sources */,
