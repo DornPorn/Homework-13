@@ -1,13 +1,12 @@
 //
-//  SettingsTableViewCellWithNotification.swift
+//  SettingsTableViewCellWithOnOffLabel.swift
 //  Homework 13
 //
 //  Created by Stanislav Rassolenko on 5/31/22.
 //
-
 import UIKit
 
-class SettingsTableViewCellWithNotification: UITableViewCell {
+class SettingsTableViewCellWithOnOffLabel: UITableViewCell {
     
     // MARK: - Initialization
     
@@ -22,7 +21,7 @@ class SettingsTableViewCellWithNotification: UITableViewCell {
         super.init(coder: coder)
     }
     
-    // MARK: - Cell identifier
+    // MARK: - Identifier
     
     static let identifier = Strings.cellId
     
@@ -34,7 +33,7 @@ class SettingsTableViewCellWithNotification: UITableViewCell {
         return view
     }()
     
-    lazy var cellLabel: UILabel = {
+    private lazy var cellLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,36 +47,12 @@ class SettingsTableViewCellWithNotification: UITableViewCell {
         return imageView
     }()
     
-    private lazy var notificationView: NotificationView = {
-        let view = NotificationView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private lazy var onOffLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black.withAlphaComponent(Metric.alpha)
+        return label
     }()
-    
-    // MARK: - Populating cell with data
-    
-    var data: CellModel? {
-        didSet{
-            guard let cellItem = data else { return }
-            
-            if let img = cellItem.icon {
-                if img == Strings.bluetoothString || img == Strings.stocksString {
-                    cellIcon.cellIcon.image = UIImage(named: img)
-                } else {
-                    cellIcon.cellIcon.image = UIImage(systemName: img)
-                }
-                
-            }
-            
-            if let title = cellItem.title {
-                cellLabel.text = "\(title)"
-            }
-            
-            if let color = cellItem.color {
-                cellIcon.containerView.backgroundColor = color
-            }
-        }
-    }
     
     // MARK: - Settings
     
@@ -85,11 +60,10 @@ class SettingsTableViewCellWithNotification: UITableViewCell {
         contentView.addSubview(cellIcon)
         contentView.addSubview(cellLabel)
         contentView.addSubview(arrowImageView)
-        contentView.addSubview(notificationView)
+        contentView.addSubview(onOffLabel)
     }
     
     private func setupLayout() {
-        
         cellIcon.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
         cellIcon.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: Metric.cellPadding).isActive = true
         
@@ -101,27 +75,48 @@ class SettingsTableViewCellWithNotification: UITableViewCell {
         arrowImageView.widthAnchor.constraint(equalToConstant: Metric.arrowWidth).isActive = true
         arrowImageView.heightAnchor.constraint(equalToConstant: Metric.arrowHeight).isActive = true
         
-        notificationView.centerYAnchor.constraint(equalTo: arrowImageView.centerYAnchor).isActive = true
-        notificationView.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -Metric.notificationPadding).isActive = true
+        onOffLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        onOffLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -Metric.switchPadding).isActive = true
+    }
+    
+    func configure(with model: Cell) {
+        if let safeImg = model.icon {
+            if safeImg == Strings.bluetoothString || safeImg == Strings.stocksString {
+                cellIcon.cellIcon.image = UIImage(named: safeImg)
+            } else {
+                cellIcon.cellIcon.image = UIImage(systemName: safeImg)
+            }
+        }
+            
+        if let title = model.title {
+            cellLabel.text = "\(title)"
+        }
+            
+        if let color = model.color {
+            cellIcon.containerView.backgroundColor = color
+        }
+        
+        if let onOffLabelText = model.onOffText {
+            onOffLabel.text = onOffLabelText
+        }
     }
 }
 
 // MARK: - Constants
 
-extension SettingsTableViewCellWithNotification {
+extension SettingsTableViewCellWithOnOffLabel {
     enum Metric {
         static let alpha: CGFloat = 0.3
         static let cellPadding: CGFloat = 20
         static let arrowWidth: CGFloat = 8
         static let arrowHeight: CGFloat = 15
-        static let notificationPadding: CGFloat = 10
+        static let switchPadding: CGFloat = 5
     }
     
     enum Strings {
-        static let cellId: String = "settingsCellWithNotification"
+        static let cellId: String = "settingsCellWithOnOffLabel"
         static let arrowImageName: String = "chevron.right"
         static let bluetoothString: String = "bluetooth"
         static let stocksString: String = "stocks"
     }
 }
-

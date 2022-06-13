@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let settingsViewController = SettingsViewController()
+        let settingsViewController = SettingsController()
         let navigationController = UINavigationController(rootViewController: settingsViewController)
         
         window = UIWindow(frame: UIScreen.main.bounds)
