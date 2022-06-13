@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct CellModel {
+struct Cell {
     let icon: String?
     let title: String?
     let color: UIColor?

@@ -1,17 +1,16 @@
 //
-//  SettingsViewController.swift
+//  SettingsView.swift
 //  Homework 13
 //
-//  Created by Stanislav Rassolenko on 5/30/22.
+//  Created by Stanislav Rassolenko on 6/13/22.
 //
 
 import UIKit
 
-class SettingsViewController: UIViewController {
-    
+class SettingsView: UIView {
     // MARK: - TableView data
     
-    private let cellData = CellAPI.getCellsData()
+    private let cellData = CellModel.getCellsData()
     
     // MARK: - UI Elements
     
@@ -19,33 +18,41 @@ class SettingsViewController: UIViewController {
 
     // MARK: - Lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
-        setupTableView()
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
         setupHierarchy()
         setupLayout()
         setupView()
+        setupTableView()
     }
     
     // MARK: - Settings
     
     private func setupHierarchy() {
-        view.addSubview(settingsTableView)
+        self.addSubview(settingsTableView)
     }
     
     private func setupLayout() {
         settingsTableView.translatesAutoresizingMaskIntoConstraints = false
-        settingsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        settingsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        settingsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        settingsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        settingsTableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        settingsTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        settingsTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        settingsTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
     private func setupView() {
-        title = Strings.navTitle
-        navigationController?.navigationBar.prefersLargeTitles = true
-        view.backgroundColor = .white
+//        
+        self.backgroundColor = .white
         settingsTableView.separatorInset = .init(top: Metric.otherSeparatorInsets, left: Metric.separatorInsetLeft, bottom: Metric.otherSeparatorInsets, right: Metric.otherSeparatorInsets)
     }
     
@@ -61,7 +68,7 @@ class SettingsViewController: UIViewController {
 
 // MARK: - UITableViewDataSource
 
-extension SettingsViewController: UITableViewDataSource {
+extension SettingsView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellData[section].count
     }
@@ -69,19 +76,19 @@ extension SettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if cellData[indexPath.section][indexPath.row].title == Strings.airplaneModeString || cellData[indexPath.section][indexPath.row].title == Strings.vpnString {
             let cell = tableView.dequeueReusableCell(withIdentifier: TogglableSettingsTableViewCell.identifier, for: indexPath) as! TogglableSettingsTableViewCell
-            cell.data = cellData[indexPath.section][indexPath.row]
+            cell.configure(with: cellData[indexPath.section][indexPath.row])
             return cell
         } else if cellData[indexPath.section][indexPath.row].title == Strings.wifiString || cellData[indexPath.section][indexPath.row].title == Strings.bluetoothString {
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCellWithOnOffLabel.identifier, for: indexPath) as! SettingsTableViewCellWithOnOffLabel
-            cell.data = cellData[indexPath.section][indexPath.row]
+            cell.configure(with: cellData[indexPath.section][indexPath.row])
             return cell
         } else if cellData[indexPath.section][indexPath.row].title == Strings.generalString {
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCellWithNotification.identifier, for: indexPath) as! SettingsTableViewCellWithNotification
-            cell.data = cellData[indexPath.section][indexPath.row]
+            cell.configure(with: cellData[indexPath.section][indexPath.row])
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.identifier, for: indexPath) as! SettingsTableViewCell
-            cell.data = cellData[indexPath.section][indexPath.row]
+            cell.configure(with: cellData[indexPath.section][indexPath.row])
             return cell
         }
     }
@@ -93,7 +100,7 @@ extension SettingsViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension SettingsViewController: UITableViewDelegate {
+extension SettingsView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Metric.rowHeight
     }
@@ -115,7 +122,7 @@ extension SettingsViewController: UITableViewDelegate {
 
 // MARK: - Constants
 
-extension SettingsViewController {
+extension SettingsView {
     enum Metric {
         static let otherSeparatorInsets: CGFloat = 0
         static let separatorInsetLeft: CGFloat = 70

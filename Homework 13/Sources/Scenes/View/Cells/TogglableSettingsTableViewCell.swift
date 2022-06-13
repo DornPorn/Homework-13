@@ -46,31 +46,6 @@ class TogglableSettingsTableViewCell: UITableViewCell {
         return switchItem
     }()
     
-    // MARK: - Populating cell with data
-    
-    var data: CellModel? {
-        didSet{
-            guard let cellItem = data else { return }
-            
-            if let img = cellItem.icon {
-                if img == Strings.bluetoothImgString || img == Strings.stocksImgString {
-                    cellIcon.cellIcon.image = UIImage(named: img)
-                } else {
-                    cellIcon.cellIcon.image = UIImage(systemName: img)
-                }
-                
-            }
-            
-            if let title = cellItem.title {
-                cellLabel.text = "\(title)"
-            }
-            
-            if let color = cellItem.color {
-                cellIcon.containerView.backgroundColor = color
-            }
-        }
-    }
-    
     // MARK: - Settings
     
     private func setupHierarchy() {
@@ -88,6 +63,24 @@ class TogglableSettingsTableViewCell: UITableViewCell {
         
         toggleSwitch.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
         toggleSwitch.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -Metric.cellPadding).isActive = true
+    }
+    
+    func configure(with model: Cell) {
+        if let safeImg = model.icon {
+            if safeImg == Strings.bluetoothImgString || safeImg == Strings.stocksImgString {
+                cellIcon.cellIcon.image = UIImage(named: safeImg)
+            } else {
+                cellIcon.cellIcon.image = UIImage(systemName: safeImg)
+            }
+        }
+            
+        if let title = model.title {
+            cellLabel.text = "\(title)"
+        }
+            
+        if let color = model.color {
+            cellIcon.containerView.backgroundColor = color
+        }
     }
 }
 

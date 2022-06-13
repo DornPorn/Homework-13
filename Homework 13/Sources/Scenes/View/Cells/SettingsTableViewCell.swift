@@ -1,12 +1,13 @@
 //
-//  SettingsTableViewCellWithOnOffLabel.swift
+//  SettingsTableViewCell.swift
 //  Homework 13
 //
-//  Created by Stanislav Rassolenko on 5/31/22.
+//  Created by Stanislav Rassolenko on 5/30/22.
 //
+
 import UIKit
 
-class SettingsTableViewCellWithOnOffLabel: UITableViewCell {
+class SettingsTableViewCell: UITableViewCell {
     
     // MARK: - Initialization
     
@@ -21,7 +22,7 @@ class SettingsTableViewCellWithOnOffLabel: UITableViewCell {
         super.init(coder: coder)
     }
     
-    // MARK: - Identifier
+    // MARK: - Cell identifier
     
     static let identifier = Strings.cellId
     
@@ -38,7 +39,7 @@ class SettingsTableViewCellWithOnOffLabel: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+        
     private lazy var arrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: Strings.arrowImageName)
@@ -47,49 +48,12 @@ class SettingsTableViewCellWithOnOffLabel: UITableViewCell {
         return imageView
     }()
     
-    private lazy var onOffLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black.withAlphaComponent(Metric.alpha)
-        return label
-    }()
-    
-    // MARK: - Populating cell with data
-    
-    var data: CellModel? {
-        didSet{
-            guard let cellItem = data else { return }
-            
-            if let img = cellItem.icon {
-                if img == Strings.bluetoothString || img == Strings.stocksString {
-                    cellIcon.cellIcon.image = UIImage(named: img)
-                } else {
-                    cellIcon.cellIcon.image = UIImage(systemName: img)
-                }
-                
-            }
-            
-            if let title = cellItem.title {
-                cellLabel.text = "\(title)"
-            }
-            
-            if let color = cellItem.color {
-                cellIcon.containerView.backgroundColor = color
-            }
-            
-            if let onOffLabelText = cellItem.onOffText {
-                onOffLabel.text = onOffLabelText
-            }
-        }
-    }
-    
     // MARK: - Settings
     
     private func setupHierarchy() {
         contentView.addSubview(cellIcon)
         contentView.addSubview(cellLabel)
         contentView.addSubview(arrowImageView)
-        contentView.addSubview(onOffLabel)
     }
     
     private func setupLayout() {
@@ -103,25 +67,39 @@ class SettingsTableViewCellWithOnOffLabel: UITableViewCell {
         arrowImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -Metric.cellPadding).isActive = true
         arrowImageView.widthAnchor.constraint(equalToConstant: Metric.arrowWidth).isActive = true
         arrowImageView.heightAnchor.constraint(equalToConstant: Metric.arrowHeight).isActive = true
-        
-        onOffLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
-        onOffLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -Metric.switchPadding).isActive = true
+    }
+    
+    func configure(with model: Cell) {
+        if let safeImg = model.icon {
+            if safeImg == Strings.bluetoothString || safeImg == Strings.stocksString {
+                cellIcon.cellIcon.image = UIImage(named: safeImg)
+            } else {
+                cellIcon.cellIcon.image = UIImage(systemName: safeImg)
+            }
+        }
+            
+        if let title = model.title {
+            cellLabel.text = "\(title)"
+        }
+            
+        if let color = model.color {
+            cellIcon.containerView.backgroundColor = color
+        }
     }
 }
 
 // MARK: - Constants
 
-extension SettingsTableViewCellWithOnOffLabel {
+extension SettingsTableViewCell {
     enum Metric {
         static let alpha: CGFloat = 0.3
         static let cellPadding: CGFloat = 20
         static let arrowWidth: CGFloat = 8
         static let arrowHeight: CGFloat = 15
-        static let switchPadding: CGFloat = 5
     }
     
     enum Strings {
-        static let cellId: String = "settingsCellWithOnOffLabel"
+        static let cellId: String = "settingsCell"
         static let arrowImageName: String = "chevron.right"
         static let bluetoothString: String = "bluetooth"
         static let stocksString: String = "stocks"
